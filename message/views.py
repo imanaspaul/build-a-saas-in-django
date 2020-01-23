@@ -10,7 +10,7 @@ def sendmail(request, id):
 	print(id)
 	name = request.GET.get("name")
 	email = request.GET.get("email")
-#	context = {""}
+	#	context = {""}
 	return redirect('sendmessage:success')
 
 

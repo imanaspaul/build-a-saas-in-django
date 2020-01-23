@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'userprofile/css/landing.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <title>Conforms.online</title>
     <style>
     	body{
@@ -34,15 +35,42 @@
 			        <a class="nav-link" href="#">About</a>
 			      </li>
 			    </ul>
-
+			     {% if user.is_authenticated %}
 			     <ul class="navbar-nav my-lg-0">
-			      <button type="button" class="btn btn-success">Get Started</button>
-			    </ul>
+			      <a href="/logout/" class="btn btn-success">Logout</a>
+			     </ul>
+			     {% else %}
+			      <ul class="navbar-nav my-lg-0">
+			      <a href="/login/" class="btn btn-success">Get Started</a>
+			     </ul>
+			     {% endif %}
 			  </div>
 		</div>
 	</nav>
 
 	<!-- hero section -->
+	{% if messages %}
+        {% for message in messages %}
+        <script>
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            onOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+
+          Toast.fire({
+            icon: '{{ message.tags }}',
+            title: "{{ message }}"
+          });
+        </script>
+        {% endfor %}
+    {% endif %}
 	<div class="container-fluid bg-white py-5">
 		<div class="container mb-5">
 		<div class="row mb-5">
@@ -54,12 +82,11 @@
 				<a href="#" class="btn btn-lg mt-5 btn-success">    Sign Up   </a>
 			</div>
 			<div class="col-md-6 my-5 py-5">
-				<img class="img-fluid" src="https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/personal_information_962o.svg" alt="">
+				<img class="img-fluid"  src="{% static "userprofile/img/heroimage.png" %}" alt="My image">
 			</div>
 		</div>
 	</div>
 	</div>
-
 	<!-- end of hero section -->
 
 	<!-- who we are -->
